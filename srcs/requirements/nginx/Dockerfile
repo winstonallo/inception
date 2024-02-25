@@ -1,7 +1,7 @@
 # specify base image (distro: debian, version: buster)
 FROM debian:buster
 
-# RUN executes the given cmd line on container startup
+# RUN: execute the given cmd line on container startup
 RUN \ 
     # update package list & installs nginx
     # -y option answers yes if prompted for confirmations
@@ -28,7 +28,7 @@ RUN \
     chown -R www-data:www-data /var/www/html && \
     chmod 755 /var/www/html
 
-# execute cmd line once image is started
+# CMD: execute cmd line once image is started
 CMD \ 
     # start nginx in foreground
     [ "nginx", "-g", "daemon off;"]
