@@ -1,6 +1,6 @@
 #!/bin/bash
 
-sleep 10
+# sleep 10
 
 until mysql -h"mariadb" -u"$SQL_USER" -p"$SQL_PWD" -e "show databases;" > /dev/null 2 > & 1; do
     echo "waiting for database connection..."
@@ -9,25 +9,25 @@ done
 
 # configuring wp
 wp config create    --allow-root \
-                    --dbname=$SQL_DATABASE \
-                    --dbuser=$SQL_USER \
-                    --dbpass=$SQL_PASSWORD \
+                    --dbname=$SQL_DB \
+                    --dbuser=$SQL_ROOT \
+                    --dbpass=$SQL_PWD \
                     --dbhost=mariadb:3306 \
                     --path='/var/www/wordpress'
 
 # installing wp
 wp core install     --allow-root \
                     --url="localhost:9000" \
-                    --title="$SITE_NAME" \
-                    --admin_user="$ADMIN_NAME" \
-                    --admin-password="$ADMIN_PWD" \
-                    --admin-email="$ADMIN_EMAIL" \
+                    --title="$DOMAIN" \
+                    --admin_user="$SQL_ROOT" \
+                    --admin-password="$SQL_ROOT_PWD" \
+                    --admin-email="$SQL_ROOT_EMAIL" \
                     --path='/var/www/wordpress'
 
-wp user create      $USER2 \
-                    $USER2_EMAIL \
+wp user create      $SQL_USER \
+                    $SQL_USER_EMAIL \
                     --allow-root \
-                    --user-pass="$USER2_PWD" \
+                    --user-pass="$SQL_USER_PWD" \
                     --role=editor
                     --path='/var/www/wordpress'
 
