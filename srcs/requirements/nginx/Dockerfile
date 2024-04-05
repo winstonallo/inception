@@ -10,7 +10,7 @@ RUN openssl req -new -newkey rsa:4096 -x509 -nodes -days 365 \
 
 
 COPY /conf/nginx.conf /etc/nginx/nginx.conf
-COPY /tools/index.html /var/www/index.html
+COPY /tools/index.html /var/www/html
 
 EXPOSE 443
 
