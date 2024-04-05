@@ -23,10 +23,10 @@ RUN rm -rf wordpress
 
 RUN mkdir /run/php
 
-RUN sed -i "s/username_here/$MYSQL_USER/g" wp-config-sample.php
-RUN sed -i "s/password_here/$MYSQL_ROOT_PASSWORD/g" wp-config-sample.php
-RUN sed -i "s/locahost/$MYSQL_HOSTNAME/g" wp-config-sample.php
-RUN sed -i "s/database_name_here/$MYSQL_DATABASE/g" wp-config-sample.php
+RUN sed -i "s/username_here/$SQL_USER/g" wp-config-sample.php
+RUN sed -i "s/password_here/$SQL_PWD/g" wp-config-sample.php
+RUN sed -i "s/locahost/$SQL_HOST/g" wp-config-sample.php
+RUN sed -i "s/database_name_here/$SQL_DB/g" wp-config-sample.php
 RUN cp wp-config-sample.php wp-config.php
 
 WORKDIR /var/www/html/
