@@ -6,15 +6,50 @@ services:
     ports:
       - 443:443
     networks:
-      - inception
+      - Inception
+  mariadb:
+    container_name: mariadb
+    build: ./requirements/mariadb
+    restart: always
+    networks:
+      - Inception
+    volumes:
+      - MDB_data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
   wordpress:
     container_name: wordpress
     build: ./requirements/wordpress
     restart: always
+    depends_on:
+      - mariadb
     networks:
-      - inception
-    env_file:
-      - .env
+      - Inception
+    environment:
+      WORDPRESS_DB_HOST: ${MYSQL_HOSTNAME}:3306
+      WORDPRESS_DB_USER: ${MYSQL_USER}
+      WORDPRESS_DB_PASSWORD: ${MYSQL_PASSWORD}
+      WORDPRESS_DB_NAME: ${MYSQL_DATABASE}
+    volumes:
+      - WP_data:/var/www/html
+
+volumes:
+  MDB_data:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/abied-ch/data/mysql
+      o: bind
+  WP_data:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/abied-ch/data/wordpress
+      o: bind
+
 networks:
-  inception:
+  Inception:
     driver: bridge
