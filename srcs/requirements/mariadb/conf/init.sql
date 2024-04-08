@@ -1,0 +1,5 @@
+ALTER USER 'root'@'localhost' IDENTIFIED BY 'root-pwd';
+DROP USER IF EXISTS ''@'localhost';
+DROP USER IF EXISTS 'root'@'%';
+DROP DATABASE IF EXISTS test;
+FLUSH PRIVILEGES;
