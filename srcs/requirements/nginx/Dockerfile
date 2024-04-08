@@ -8,7 +8,6 @@ RUN openssl req -new -newkey rsa:4096 -x509 -nodes -days 365 \
     -out /etc/ssl/certs/nginx-selfsigned.crt \
     -subj "/C=AU/L=VI/O=42/OU=student/CN=abied-ch.42.fr"
 
-
 COPY /conf/nginx.conf /etc/nginx/nginx.conf
 COPY /tools/index.html /var/www/html
 
