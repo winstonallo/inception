@@ -1,5 +1,4 @@
-ALTER USER 'root'@'localhost' IDENTIFIED BY 'root-pwd';
-DROP USER IF EXISTS ''@'localhost';
-DROP USER IF EXISTS 'root'@'%';
-DROP DATABASE IF EXISTS test;
+CREATE DATABASE IF NOT EXISTS mariadb;
+CREATE USER IF NOT EXISTS 'abied-ch'@'localhost' IDENTIFIED BY 'Arthur54600wow';
+GRANT ALL PRIVILEGES ON mariadb.* TO 'abied-ch'@'localhost';
 FLUSH PRIVILEGES;

@@ -15,6 +15,7 @@ RUN apt-get install php-curl -y
 RUN apt-get install wget unzip -y
 
 COPY ./conf/www.conf /etc/php/7.4/fpm/pool.d/
+COPY ./conf/wp-config.php /var/www/html/
 
 WORKDIR /var/www/html
 
