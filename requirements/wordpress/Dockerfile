@@ -13,4 +13,3 @@ COPY tools/install-wordpress.sh .
 
 RUN chmod +x install-wordpress.sh
 CMD [ "./install-wordpress.sh" ]
-# -F:   Force to run in background and ignore daemon

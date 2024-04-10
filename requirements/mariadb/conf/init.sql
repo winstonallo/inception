@@ -1,4 +1,4 @@
-create database wordpress;
-create user 'abied-ch'@'%' identified by 'password';
-grant all privileges on *.* to 'abied-ch'@'%' with grant option;
-flush privileges;
+CREATE DATABASE wordpress;
+CREATE USER 'wpuser'@'%' IDENTIFIED BY 'password';
+GRANT ALL PRIVILEGES ON *.* TO 'wpuser'@'%' WITH GRANT OPTION;
+FLUSH PRIVILEGES;
