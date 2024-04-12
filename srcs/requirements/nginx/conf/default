@@ -9,7 +9,7 @@ server
 
 	server_name _;
 
-	ssl_protocols TLSv1.2 TLSv1.3;  # Enable only TLS v1.2 and v1.3
+	ssl_protocols TLSv1.2 TLSv1.3;
 
     ssl_certificate /etc/ssl/certs/nginx-selfsigned.crt;
     ssl_certificate_key /etc/ssl/private/nginx-selfsigned.key;

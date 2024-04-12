@@ -5,7 +5,7 @@ services:
     ports:
       - 443:443
     volumes:
-      - ./web:/var/www/html
+      - /home/abied-ch/data/web:/var/www/html
     networks:
       - inception
     depends_on:
@@ -15,12 +15,12 @@ services:
     build: requirements/wordpress/
     container_name: wordpress
     volumes:
-      - ./web:/var/www/html
+      - /home/abied-ch/data/web:/var/www/html
     networks:
       - inception
     env_file:
       - .env
-    depends_on:
+    depends_on: 
       mariadb:
         condition: service_healthy
     restart: always
@@ -28,15 +28,15 @@ services:
     build: requirements/mariadb/
     container_name: mariadb
     volumes:
-      - ./database:/var/lib/mysql
+      - /home/abied-ch/data/database:/var/lib/mysql
     networks:
       - inception
     env_file:
       - .env
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-p$$DB_ADMIN_PWD"]
       interval: 10s
-      timeout: 5s
+      timeout: 10s
       retries: 5
     restart: always
 
