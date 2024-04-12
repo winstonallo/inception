@@ -8,6 +8,9 @@ services:
       - ./web:/var/www/html
     networks:
       - inception
+    depends_on:
+      - wordpress
+    restart: always
   wordpress:
     build: requirements/wordpress/
     container_name: wordpress
@@ -17,6 +20,10 @@ services:
       - inception
     env_file:
       - .env
+    depends_on:
+      mariadb:
+        condition: service_healthy
+    restart: always
   mariadb:
     build: requirements/mariadb/
     container_name: mariadb
@@ -26,6 +33,12 @@ services:
       - inception
     env_file:
       - .env
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: always
 
 networks:
   inception:
