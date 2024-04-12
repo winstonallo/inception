@@ -1,23 +1,29 @@
 #!/bin/bash
 
-mysql_install_db --user=mysql --basedir=/usr --datadir=/var/lib/mysql
+if [ "$(ls -A $DB_DATADIR)" ]; then
+    echo "INFO: Database system already initialized in $DB_DATADIR, skipping mysql_install_db."
+else
+    echo "INFO: Initializing the database system."
+    mysql_install_db --user=$MYSQL_USER --basedir=$DB_BASEDIR --datadir=$DB_DATADIR
+fi
+
 mysqld_safe --general-log=1 --general-log-file=/var/log/mysql/general.log &
 
 TIMEOUT=1000
 INTERVAL=1
 ELAPSED=0
 
+echo "INFO: Waiting for the MySQL service to start.."
 while ! mysqladmin ping -u root --silent; do
     sleep $INTERVAL
     ELAPSED=$(($ELAPSED + $INTERVAL))
     if [ $ELAPSED -ge $TIMEOUT ]; then
-        echo "MariaDB startup timed out after ${ELAPSED} seconds."
+        echo "ERROR: MariaDB startup timed out after ${ELAPSED} seconds."
         exit 1
     fi
-    echo "Waiting for MariaDB to start... ${ELAPSED} seconds elapsed."
 done
 
-echo "MariaDB is up and running!"
+echo "INFO: MySQL running."
 
 DB_EXISTS=$(mysql -u root -sse "SELECT 1 FROM information_schema.schemata WHERE schema_name='$DB_NAME'")
 
@@ -34,7 +40,7 @@ EOF
 
     mysql -u root < /etc/mysql/init.sql
 else
-    echo "INFO: Database already installed - skipping initialization."
+    echo "INFO: Database already initialized."
 fi
 
 wait
