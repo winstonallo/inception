@@ -7,7 +7,6 @@ TIMEOUT=1000
 INTERVAL=1
 ELAPSED=0
 
-# Wait for mariadb to start before proceeding
 while ! mysqladmin ping -u root --silent; do
     sleep $INTERVAL
     ELAPSED=$(($ELAPSED + $INTERVAL))
@@ -20,13 +19,6 @@ done
 
 echo "MariaDB is up and running!"
 
-# Run MySQL query on database to check existence
-#
-# if not exists:
-#   initialize
-#
-# else:
-#   skip
 DB_EXISTS=$(mysql -u root -sse "SELECT 1 FROM information_schema.schemata WHERE schema_name='$DB_NAME'")
 
 if [ ! "$DB_EXISTS" ]; then
@@ -45,5 +37,4 @@ else
     echo "INFO: Database already installed - skipping initialization."
 fi
 
-# Wait for background processes to finish
 wait
