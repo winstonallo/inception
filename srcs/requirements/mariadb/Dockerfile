@@ -11,4 +11,4 @@ RUN mkdir -p /run/mysqld
 RUN chmod +x init.sh
 RUN chown -R mysql:mysql /var/lib/mysql
 
-CMD [ "./init.sh" ]
+ENTRYPOINT [ "./init.sh" ]
