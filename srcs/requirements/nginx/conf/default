@@ -1,24 +1,34 @@
 server 
 {
+	# Listen ONLY on 442 and makes this server default for this port
 	listen 443 ssl default_server;
 	listen [::]:443 ssl default_server;
 
+	# Root directory - entrypoint
 	root /var/www/html;
 
+	# Priority of index files
 	index index.php index.html index.htm index.nginx-debian.html;
 
+	# Wildcard for server names not specified anywhere else
 	server_name _;
 
+	# Enable only TLSv1.2 & TLSv1.3
 	ssl_protocols TLSv1.2 TLSv1.3;
 
+	# SSL certificate/key locations
     ssl_certificate /etc/ssl/certs/nginx-selfsigned.crt;
     ssl_certificate_key /etc/ssl/private/nginx-selfsigned.key;
 
+	# Try root as file, then as directory, else 404
 	location / 
 	{
 		try_files $uri $uri/ =404;
 	}
 
+	# Handle PHP file processing:
+	#	- Include FastCGI config
+	#	- Specifies FastCGI server
 	location ~ \.php$ 
 	{
 		include snippets/fastcgi-php.conf;
