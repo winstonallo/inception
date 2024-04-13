@@ -2,7 +2,7 @@ FROM debian:bullseye
 
 # Update package lists
 # Upgrade existing packages
-# Install Nfinx
+# Install Nginx
 # Install OpenSSL
 RUN apt update 
 RUN apt upgrade
