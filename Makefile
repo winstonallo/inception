@@ -15,7 +15,7 @@ start :
 reset :
 	@docker system prune -a --volumes && sudo rm -rf /home/abied-ch/data/*
 
-re : reset all
+re : stop reset all
 
 status : 
 	@docker ps
